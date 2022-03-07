@@ -1,7 +1,6 @@
 package com.firoz.shooply.order.controller;
 
 
-import com.firoz.shooply.order.model.AddOrderModel;
 import com.firoz.shooply.order.model.CartModel;
 import com.firoz.shooply.order.model.OrderModel;
 import com.firoz.shooply.order.service.OrderService;
@@ -19,8 +18,8 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping(path = "oderProduct")
-    public Object oderProduct(@RequestBody List<AddOrderModel> addOrderModelList){
-        return orderService.oderProduct(addOrderModelList);
+    public Object oderProduct(@RequestBody JSONArray addOrderModeArray){
+        return orderService.oderProduct(addOrderModeArray);
     }
 
     @PostMapping(path = "addToCart")

@@ -1,6 +1,5 @@
 package com.firoz.shooply.order.service;
 
-import com.firoz.shooply.order.model.AddOrderModel;
 import com.firoz.shooply.order.model.CartModel;
 import com.firoz.shooply.order.model.OrderModel;
 import com.firoz.shooply.order.repository.CartRepository;
@@ -25,28 +24,46 @@ public class OrderService {
 
 //    private final String serverKey = "AAAAIjDnh98:APA91bHs6ZqDHYHnrtFg4b_IwbUWlgfFC4KwJEb6CZxPlLhHPSff4cXiz6x46eAcXDRkmpFaTolc7TSHDp5zmfgYn8aYyE4ZYaZCA68UqHB6rZA-dq2IE1rjiaUqoeUBmDrAD4HOLQGc";
 
-    public Object oderProduct(List<AddOrderModel> addOrderModelList) {
+    public Object oderProduct(JSONArray addOrderModeArray) {
         JSONObject jsonObject = new JSONObject();
 
         String status = "1";
         String statusMassege = "Pending to Accept";
 
-        for (int i = 0; i < addOrderModelList.size(); i++) {
-            AddOrderModel addOrderModel = addOrderModelList.get(i);
+        for (int i = 0; i < addOrderModeArray.length(); i++) {
+            org.json.JSONObject orderObject=addOrderModeArray.getJSONObject(i);
 
             String orderId = UUID.randomUUID().toString();
-            OrderModel orderModel = new OrderModel(orderId, addOrderModel.getProductId(),
-                    addOrderModel.getStoreId(), addOrderModel.getStoreName(), addOrderModel.getStoreEmail(),
-                    addOrderModel.getProductName(), addOrderModel.getProductDescription(),
-                    addOrderModel.getProductQuantity(), addOrderModel.getProductRate(),
-                    addOrderModel.getProductTotalRate(), addOrderModel.getProductDeliverAddress(), addOrderModel.getProductImageLink(),
-                    addOrderModel.getProductCategory(), addOrderModel.getUserPhoneNumber(),
-                    addOrderModel.getUserName(),addOrderModel.getUserId(), status, statusMassege, LocalDateTime.now());
+            OrderModel orderModel=new OrderModel(
+                    orderId,
+                    orderObject.getString("productId"),
+                    orderObject.getString("userId"),
+                    orderObject.getString("storeId"),
+                    orderObject.getString("storeName"),
+                    orderObject.getString("storeEmail"),
+                    orderObject.getString("productName"),
+                    orderObject.getString("productDescription"),
+                    orderObject.getString("productRate"),
+                    orderObject.getString("productImageLink"),
+                    orderObject.getString("mrp"),
+                    orderObject.getString("discount"),
+                    orderObject.getString("storeCategoryId"),
+                    orderObject.getString("storecategory"),
+                    orderObject.getString("sub_category"),
+                    orderObject.getString("quantity"),
+                    orderObject.getString("productDeliverAddress"),
+                    orderObject.getString("userPhoneNumber"),
+                    orderObject.getString("userName"),
+                    orderObject.getString("productTotalRate"),
+                    status,
+                    statusMassege,
+                    LocalDateTime.now());
+
             orderRepository.save(orderModel);
 
-            sendNotification(addOrderModel.getProductName(),
-                    addOrderModel.getProductDescription(),
-                    "/topics/" + addOrderModel.getStoreId());
+            sendNotification(orderModel.getProductName(),
+                    orderModel.getProductDescription(),
+                    "/topics/" + orderModel.getStoreId());
         }
 
         jsonObject.put("status", true);

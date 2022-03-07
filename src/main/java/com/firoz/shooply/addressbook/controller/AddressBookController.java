@@ -1,11 +1,8 @@
 package com.firoz.shooply.addressbook.controller;
 
 import com.firoz.shooply.addressbook.service.AddressBookService;
-import com.firoz.shooply.order.model.AddOrderModel;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/addressBook")
