@@ -6,6 +6,7 @@ import com.firoz.shooply.product.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -70,5 +71,9 @@ public class ProductService {
 
     public Object findByStorecategory(String productCategory) {
         return productRepository.findByStorecategory(productCategory).get();
+    }
+
+    public Object findByProductId(String productId) {
+        return productRepository.findByProductId(productId);
     }
 }

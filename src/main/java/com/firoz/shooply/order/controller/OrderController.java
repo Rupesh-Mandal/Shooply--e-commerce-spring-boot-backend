@@ -18,7 +18,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping(path = "oderProduct")
-    public Object oderProduct(@RequestBody JSONArray addOrderModeArray){
+    public Object oderProduct(@RequestBody String addOrderModeArray){
         return orderService.oderProduct(addOrderModeArray);
     }
 
@@ -77,6 +77,23 @@ public class OrderController {
     @PostMapping(path = "deliveryStarted")
     public Object deliveryStarted(@RequestBody OrderModel orderModel){
         return orderService.deliveryStarted(orderModel);
+    }
+
+
+    @PostMapping(path = "getOrderHistory")
+    public Object getOrderHistory(@RequestParam String userId){
+        return orderService.getOrderHistory(userId);
+    }
+
+
+    @PostMapping(path = "getStartedOrder")
+    public Object getStartedOrder(@RequestParam String userId){
+        return orderService.getStartedOrder(userId);
+    }
+
+    @PostMapping(path = "getPendingOrder")
+    public Object getPendingOrder(@RequestParam String userId){
+        return orderService.getPendingOrder(userId);
     }
 
 

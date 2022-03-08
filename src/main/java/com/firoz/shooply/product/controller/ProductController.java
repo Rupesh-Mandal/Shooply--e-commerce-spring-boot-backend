@@ -49,4 +49,9 @@ public class ProductController {
         return productService.getAllProductUser();
     }
 
+    @PostMapping(path = "findByProductId")
+    public Object findByProductId(@RequestParam String productId){
+        return productService.findByProductId(productId);
+    }
+
 }

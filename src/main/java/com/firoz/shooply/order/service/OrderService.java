@@ -24,9 +24,9 @@ public class OrderService {
 
 //    private final String serverKey = "AAAAIjDnh98:APA91bHs6ZqDHYHnrtFg4b_IwbUWlgfFC4KwJEb6CZxPlLhHPSff4cXiz6x46eAcXDRkmpFaTolc7TSHDp5zmfgYn8aYyE4ZYaZCA68UqHB6rZA-dq2IE1rjiaUqoeUBmDrAD4HOLQGc";
 
-    public Object oderProduct(JSONArray addOrderModeArray) {
+    public Object oderProduct(String array) {
         JSONObject jsonObject = new JSONObject();
-
+        JSONArray addOrderModeArray=new JSONArray(array);
         String status = "1";
         String statusMassege = "Pending to Accept";
 
@@ -60,14 +60,14 @@ public class OrderService {
                     LocalDateTime.now());
 
             orderRepository.save(orderModel);
-
+            cartRepository.deleteById(orderObject.getLong("id"));
             sendNotification(orderModel.getProductName(),
                     orderModel.getProductDescription(),
                     "/topics/" + orderModel.getStoreId());
         }
 
         jsonObject.put("status", true);
-        jsonObject.put("messag", "Successfully Ordered");
+        jsonObject.put("massage", "Successfully Ordered");
         return jsonObject;
 
     }
@@ -217,7 +217,7 @@ public class OrderService {
     }
 
     public Object deliveryStarted(OrderModel orderModel) {
-        String status = "0";
+        String status = "2";
         String statusMassege = "Delivery Started";
 
         JSONObject jsonObject = new JSONObject();
@@ -290,5 +290,17 @@ public class OrderService {
         jsonObject.put("status", true);
         jsonObject.put("massage", "Successfully Added to Cart");
         return jsonObject;
+    }
+
+    public Object getOrderHistory(String userId) {
+        return orderRepository.findAllByUserIdAndStatus(userId,"0");
+    }
+
+    public Object getStartedOrder(String userId) {
+        return orderRepository.findAllByUserIdAndStatus(userId,"2");
+    }
+
+    public Object getPendingOrder(String userId) {
+        return orderRepository.findAllByUserIdAndStatus(userId,"1");
     }
 }
