@@ -8,4 +8,8 @@ import java.util.Optional;
 
 public interface AddressBookRepository extends JpaRepository<AddressBookModel,Long> {
     Optional<List<AddressBookModel>> findByUserId(String userId);
+    AddressBookModel findByAddressId(String addressId);
+
+    void deleteByAddressId(String addressId);
+
 }
