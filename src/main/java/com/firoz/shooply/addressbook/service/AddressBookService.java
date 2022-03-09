@@ -7,6 +7,7 @@ import com.firoz.shooply.addressbook.repository.DefaultAddressBookRepository;
 import lombok.AllArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -21,7 +22,7 @@ public class AddressBookService {
         JSONObject jsonObject=new JSONObject();
         String AddressId= UUID.randomUUID().toString();
 
-        AddressBookModel addressBookModel=addressBookRepository.save(new AddressBookModel(AddressId,userId,productDeliverAddress,userPhoneNumber));
+        AddressBookModel addressBookModel=addressBookRepository.save(new AddressBookModel(userId,AddressId,productDeliverAddress,userPhoneNumber));
         jsonObject.put("status",true);
         jsonObject.put("message","Successfull");
         jsonObject.put("AddressBookModel",addressBookModel);
@@ -49,7 +50,9 @@ public class AddressBookService {
         return jsonObject;
     }
 
+    @Transactional
     public Object deleteByAddressId(String addressId) {
+        System.out.println(addressId);
         addressBookRepository.deleteByAddressId(addressId);
         Optional<DefaultAddressBook> defaultAddressBook=defaultAddressBookRepository.findByUserId(addressId);
         if (defaultAddressBook.isPresent()){

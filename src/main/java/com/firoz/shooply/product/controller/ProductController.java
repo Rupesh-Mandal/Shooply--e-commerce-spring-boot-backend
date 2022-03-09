@@ -29,7 +29,7 @@ public class ProductController {
     }
 
     @PostMapping(path = "findByStorecategory")
-    public Object findByStorecategory(@RequestParam("storecategory") String storecategory){
+    public Object findByStorecategory(@RequestParam String storecategory){
         return productService.findByStorecategory(storecategory);
     }
 
