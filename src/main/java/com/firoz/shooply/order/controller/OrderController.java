@@ -6,9 +6,12 @@ import com.firoz.shooply.order.model.OrderModel;
 import com.firoz.shooply.order.service.OrderService;
 import lombok.AllArgsConstructor;
 import org.json.JSONArray;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/order")
@@ -39,6 +42,8 @@ public class OrderController {
 
     @PostMapping(path = "getAllCartList")
     public Object getAllCartList(@RequestParam String userId){
+
+
         return orderService.getAllCartList(userId);
     }
 
@@ -81,19 +86,31 @@ public class OrderController {
 
 
     @PostMapping(path = "getOrderHistory")
-    public Object getOrderHistory(@RequestParam String userId){
-        return orderService.getOrderHistory(userId);
+    public Object getOrderHistory(@RequestParam String userId,
+                                  @RequestParam Optional<Integer> page,
+                                  @RequestParam Optional<Integer> pageSize,
+                                  @RequestParam Optional<Sort.Direction> sort,
+                                  @RequestParam Optional<String> sortBy){
+        return orderService.getOrderHistory(userId,PageRequest.of( page.orElse(0),pageSize.orElse(10),sort.orElse(Sort.Direction.ASC), sortBy.orElse("createdTime")));
     }
 
 
     @PostMapping(path = "getStartedOrder")
-    public Object getStartedOrder(@RequestParam String userId){
-        return orderService.getStartedOrder(userId);
+    public Object getStartedOrder(@RequestParam String userId,
+                                  @RequestParam Optional<Integer> page,
+                                  @RequestParam Optional<Integer> pageSize,
+                                  @RequestParam Optional<Sort.Direction> sort,
+                                  @RequestParam Optional<String> sortBy){
+        return orderService.getStartedOrder(userId,PageRequest.of( page.orElse(0),pageSize.orElse(10),sort.orElse(Sort.Direction.ASC), sortBy.orElse("createdTime")));
     }
 
     @PostMapping(path = "getPendingOrder")
-    public Object getPendingOrder(@RequestParam String userId){
-        return orderService.getPendingOrder(userId);
+    public Object getPendingOrder(@RequestParam String userId,
+                                  @RequestParam Optional<Integer> page,
+                                  @RequestParam Optional<Integer> pageSize,
+                                  @RequestParam Optional<Sort.Direction> sort,
+                                  @RequestParam Optional<String> sortBy){
+        return orderService.getPendingOrder(userId,PageRequest.of( page.orElse(0),pageSize.orElse(10),sort.orElse(Sort.Direction.ASC), sortBy.orElse("createdTime")));
     }
 
 

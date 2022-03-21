@@ -18,11 +18,11 @@ public class AddressBookService {
     private final AddressBookRepository addressBookRepository;
     private final DefaultAddressBookRepository defaultAddressBookRepository;
 
-    public Object addAddress(String productDeliverAddress, String userId, String userPhoneNumber) {
+    public Object addAddress(String productDeliverAddress,String productDeliverInstruction, String userId, String userPhoneNumber) {
         JSONObject jsonObject=new JSONObject();
         String AddressId= UUID.randomUUID().toString();
 
-        AddressBookModel addressBookModel=addressBookRepository.save(new AddressBookModel(userId,AddressId,productDeliverAddress,userPhoneNumber));
+        AddressBookModel addressBookModel=addressBookRepository.save(new AddressBookModel(userId,AddressId,productDeliverAddress,productDeliverInstruction,userPhoneNumber));
         jsonObject.put("status",true);
         jsonObject.put("message","Successfull");
         jsonObject.put("AddressBookModel",addressBookModel);

@@ -12,8 +12,8 @@ public class AddressBookController {
     private final AddressBookService addressBookService;
 
     @PostMapping(path = "addAddress")
-    public Object addAddress(@RequestParam String productDeliverAddress, @RequestParam String userId, @RequestParam String userPhoneNumber) {
-        return addressBookService.addAddress(productDeliverAddress, userId, userPhoneNumber);
+    public Object addAddress(@RequestParam String productDeliverAddress, @RequestParam String productDeliverInstruction,  @RequestParam String userId, @RequestParam String userPhoneNumber) {
+        return addressBookService.addAddress(productDeliverAddress,productDeliverInstruction, userId, userPhoneNumber);
     }
 
     @PostMapping(path = "deleteByAddressId")

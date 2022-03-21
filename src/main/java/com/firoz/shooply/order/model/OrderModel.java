@@ -50,9 +50,12 @@ public class OrderModel {
 
     private String status;
     private String statusMessage;
+    private String deliveryType;
+    private String productDeliverInstruction;
+
     private LocalDateTime createdTime;
 
-    public OrderModel(@NonNull String orderId, String productId, String userId, String storeId, String storeName, String storeEmail, String productName, String productDescription, String productRate, String productImageLink, String mrp, String discount, String storeCategoryId, String storecategory, String sub_category, String quantity, String productDeliverAddress, String userPhoneNumber, String userName, String productTotalRate, String status, String statusMessage, LocalDateTime createdTime) {
+    public OrderModel(@NonNull String orderId, String productId, String userId, String storeId, String storeName, String storeEmail, String productName, String productDescription, String productRate, String productImageLink, String mrp, String discount, String storeCategoryId, String storecategory, String sub_category, String quantity, String productDeliverAddress, String userPhoneNumber, String userName, String productTotalRate, String status, String statusMessage, String deliveryType, String productDeliverInstruction, LocalDateTime createdTime) {
         this.orderId = orderId;
         this.productId = productId;
         this.userId = userId;
@@ -75,6 +78,8 @@ public class OrderModel {
         this.productTotalRate = productTotalRate;
         this.status = status;
         this.statusMessage = statusMessage;
+        this.deliveryType = deliveryType;
+        this.productDeliverInstruction = productDeliverInstruction;
         this.createdTime = createdTime;
     }
 }

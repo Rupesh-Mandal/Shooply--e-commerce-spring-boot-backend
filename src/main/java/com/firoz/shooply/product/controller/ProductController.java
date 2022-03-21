@@ -4,7 +4,12 @@ import com.firoz.shooply.product.model.AddProductModel;
 import com.firoz.shooply.product.model.Product;
 import com.firoz.shooply.product.service.ProductService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/product")
@@ -34,8 +39,13 @@ public class ProductController {
     }
 
     @PostMapping(path = "loadSearch")
-    public Object loadSearch(@RequestParam("key") String key){
-        return productService.loadSearch(key);
+    public Object loadSearch(@RequestParam("key") String key,
+                             @RequestParam Optional<Integer> page,
+                             @RequestParam Optional<Integer> pageSize,
+                             @RequestParam Optional<Sort.Direction> sort,
+                             @RequestParam Optional<String> sortBy){
+
+        return productService.loadSearch(key,PageRequest.of( page.orElse(0),pageSize.orElse(10),sort.orElse(Sort.Direction.ASC), sortBy.orElse("productName")) );
     }
 
     @PostMapping(path = "deletProduct")
@@ -45,8 +55,12 @@ public class ProductController {
 
 
     @PostMapping(path = "getAllProductUser")
-    public Object getAllProoductUser(){
-        return productService.getAllProductUser();
+    public Object getAllProoductUser( @RequestParam Optional<Integer> page,
+                                      @RequestParam Optional<Integer> pageSize,
+                                      @RequestParam Optional<Sort.Direction> sort,
+                                      @RequestParam Optional<String> sortBy){
+
+        return productService.getAllProductUser(PageRequest.of( page.orElse(0),pageSize.orElse(10),sort.orElse(Sort.Direction.ASC), sortBy.orElse("createdTime")) );
     }
 
     @PostMapping(path = "findByProductId")

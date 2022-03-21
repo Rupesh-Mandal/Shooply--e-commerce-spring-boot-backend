@@ -7,6 +7,7 @@ import com.firoz.shooply.order.repository.OrderRepository;
 import lombok.AllArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.json.JSONArray;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -57,6 +58,8 @@ public class OrderService {
                     orderObject.getString("productTotalRate"),
                     status,
                     statusMassege,
+                    orderObject.getString("deliveryType"),
+                    orderObject.getString("productDeliverInstruction"),
                     LocalDateTime.now());
 
             orderRepository.save(orderModel);
@@ -292,15 +295,15 @@ public class OrderService {
         return jsonObject;
     }
 
-    public Object getOrderHistory(String userId) {
-        return orderRepository.findAllByUserIdAndStatus(userId,"0");
+    public Object getOrderHistory(String userId,Pageable pageable) {
+        return orderRepository.findAllByUserIdAndStatus(userId,"0",pageable);
     }
 
-    public Object getStartedOrder(String userId) {
-        return orderRepository.findAllByUserIdAndStatus(userId,"2");
+    public Object getStartedOrder(String userId,Pageable pageable) {
+        return orderRepository.findAllByUserIdAndStatus(userId,"2",pageable);
     }
 
-    public Object getPendingOrder(String userId) {
-        return orderRepository.findAllByUserIdAndStatus(userId,"1");
+    public Object getPendingOrder(String userId,Pageable pageable) {
+        return orderRepository.findAllByUserIdAndStatus(userId,"1",pageable);
     }
 }

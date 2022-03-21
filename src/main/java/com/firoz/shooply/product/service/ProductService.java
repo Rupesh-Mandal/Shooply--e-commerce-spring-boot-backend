@@ -5,9 +5,11 @@ import com.firoz.shooply.product.model.Product;
 import com.firoz.shooply.product.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import net.minidev.json.JSONObject;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -60,13 +62,13 @@ public class ProductService {
         return jsonObject;
     }
 
-    public Object getAllProductUser() {
-        List<Product> productList = productRepository.findAll();
+    public Object getAllProductUser(Pageable pageable) {
+        List<Product> productList = productRepository.findAll(pageable).toList();
         return productList;
     }
 
-    public Object loadSearch(String key) {
-        return productRepository.findAll(key);
+    public Object loadSearch(String key,Pageable pageable) {
+        return productRepository.findAll(key,pageable);
     }
 
     public Object findByStorecategory(String productCategory) {

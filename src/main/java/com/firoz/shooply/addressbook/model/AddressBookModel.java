@@ -21,12 +21,14 @@ public class AddressBookModel {
     private String userId;
     private String addressId;
     private String productDeliverAddress;
+    private String productDeliverInstruction;
     private String userPhoneNumber;
 
-    public AddressBookModel(String userId, String addressId, String productDeliverAddress, String userPhoneNumber) {
+    public AddressBookModel(String userId, String addressId, String productDeliverAddress, String productDeliverInstruction, String userPhoneNumber) {
         this.userId = userId;
         this.addressId = addressId;
         this.productDeliverAddress = productDeliverAddress;
+        this.productDeliverInstruction = productDeliverInstruction;
         this.userPhoneNumber = userPhoneNumber;
     }
 }
