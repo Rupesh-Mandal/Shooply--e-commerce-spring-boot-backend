@@ -114,4 +114,34 @@ public class OrderController {
     }
 
 
+    @PostMapping(path = "getSellerPendingOrder")
+    public Object getSellerPendingOrder(@RequestParam String storeId,
+                                  @RequestParam Optional<Integer> page,
+                                  @RequestParam Optional<Integer> pageSize,
+                                  @RequestParam Optional<Sort.Direction> sort,
+                                  @RequestParam Optional<String> sortBy){
+        return orderService.getSellerPendingOrder(storeId,PageRequest.of( page.orElse(0),pageSize.orElse(10),sort.orElse(Sort.Direction.ASC), sortBy.orElse("createdTime")));
+    }
+
+
+
+    @PostMapping(path = "getSellerOrderHistory")
+    public Object getSellerOrderHistory(@RequestParam String storeId,
+                                  @RequestParam Optional<Integer> page,
+                                  @RequestParam Optional<Integer> pageSize,
+                                  @RequestParam Optional<Sort.Direction> sort,
+                                  @RequestParam Optional<String> sortBy){
+        return orderService.getSellerOrderHistory(storeId,PageRequest.of( page.orElse(0),pageSize.orElse(10),sort.orElse(Sort.Direction.ASC), sortBy.orElse("createdTime")));
+    }
+
+
+    @PostMapping(path = "getSellerStartedOrder")
+    public Object getSellerStartedOrder(@RequestParam String storeId,
+                                  @RequestParam Optional<Integer> page,
+                                  @RequestParam Optional<Integer> pageSize,
+                                  @RequestParam Optional<Sort.Direction> sort,
+                                  @RequestParam Optional<String> sortBy){
+        return orderService.getSellerStartedOrder(storeId,PageRequest.of( page.orElse(0),pageSize.orElse(10),sort.orElse(Sort.Direction.ASC), sortBy.orElse("createdTime")));
+    }
+
 }

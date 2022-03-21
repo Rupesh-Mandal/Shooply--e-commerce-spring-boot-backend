@@ -7,6 +7,7 @@ import com.firoz.shooply.order.repository.OrderRepository;
 import lombok.AllArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.json.JSONArray;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Async;
@@ -220,8 +221,8 @@ public class OrderService {
     }
 
     public Object deliveryStarted(OrderModel orderModel) {
-        String status = "2";
-        String statusMassege = "Delivery Started";
+        String status = "0";
+        String statusMassege = "Succesfully Delivered";
 
         JSONObject jsonObject = new JSONObject();
 
@@ -230,11 +231,9 @@ public class OrderService {
         orderRepository.save(orderModel);
         if (orderRepository.save(orderModel).getStatus().equals("0")) {
             jsonObject.put("status", true);
-            jsonObject.put("messag", "Cancel Successfully");
-            sendNotification("Order Cancel " + orderModel.getProductName(), orderModel.getStatusMessage(), "/topics/" + orderModel.getUserId());
-            sendNotification("Cancel by User",
-                    orderModel.getProductName(),
-                    "/topics/" + orderModel.getStoreId());
+            jsonObject.put("messag", "Succesfully Delivered");
+            sendNotification("Succesfully Delivered" + orderModel.getProductName(), orderModel.getStatusMessage(), "/topics/" + orderModel.getUserId());
+
             return jsonObject;
         }
 
@@ -305,5 +304,19 @@ public class OrderService {
 
     public Object getPendingOrder(String userId,Pageable pageable) {
         return orderRepository.findAllByUserIdAndStatus(userId,"1",pageable);
+    }
+
+    public Object getSellerPendingOrder(String storeId,Pageable pageable) {
+        return orderRepository.findAllByStoreIdAndStatus(storeId,"1",pageable);
+    }
+
+    public Object getSellerOrderHistory(String storeId, Pageable pageable) {
+        return orderRepository.findAllByStoreIdAndStatus(storeId,"0",pageable);
+
+    }
+
+    public Object getSellerStartedOrder(String storeId, Pageable pageable) {
+        return orderRepository.findAllByStoreIdAndStatus(storeId,"2",pageable);
+
     }
 }

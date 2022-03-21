@@ -39,8 +39,8 @@ public class ProductService {
     }
 
 
-    public Object getAllProductSeller(String storeId) {
-        List<Product> productList = productRepository.findByStoreId(storeId).get();
+    public Object getAllProductSeller(String storeId, Pageable pageable) {
+        List<Product> productList = productRepository.findByStoreId(storeId,pageable).get();
         return productList;
     }
 

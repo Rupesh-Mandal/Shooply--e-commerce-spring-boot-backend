@@ -29,8 +29,14 @@ public class ProductController {
     }
 
     @PostMapping(path = "getAllProductSeller")
-    public Object getAllProoductSeller(@RequestParam("storeId") String storeId){
-        return productService.getAllProductSeller(storeId);
+    public Object getAllProoductSeller(@RequestParam("storeId") String storeId,
+                                       @RequestParam Optional<Integer> page,
+                                       @RequestParam Optional<Integer> pageSize,
+                                       @RequestParam Optional<Sort.Direction> sort,
+                                       @RequestParam Optional<String> sortBy){
+
+
+        return productService.getAllProductSeller(storeId,PageRequest.of( page.orElse(0),pageSize.orElse(10),sort.orElse(Sort.Direction.ASC), sortBy.orElse("createdTime")) );
     }
 
     @PostMapping(path = "findByStorecategory")

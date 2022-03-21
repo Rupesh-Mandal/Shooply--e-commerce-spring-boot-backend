@@ -10,7 +10,8 @@ package com.firoz.shooply.product.repository;
         import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product,Long> {
-    Optional<List<Product>> findByStoreId(String storeId);
+    Optional<List<Product>> findByStoreId(String storeId, Pageable pageable);
+
     Optional<List<Product>> findByStorecategory(String storecategory);
     Product findByProductId(String productId);
 
